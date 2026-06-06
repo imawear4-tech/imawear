@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imawear Streetwear Creator Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #a1a1aa;
+        }
+        .font-syne {
+            font-family: 'Syne', sans-serif;
+        }
+        .border-luxury {
+            border-color: #121214;
+        }
+        .bg-luxury-card {
+            background-color: #0b0b0c;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ffe500;
+        }
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #050505;
+            margin: 0;
+            font: inherit;
+            color: #ffe500;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid #1c1c1e;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65rem;
+            height: 0.65rem;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            background-color: #ffe500;
+        }
+        input[type="checkbox"]:checked {
+            border-color: #ffe500;
+        }
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen custom-scrollbar pb-24">
+
+    <!-- Luxury Minimal Header -->
+    <header class="border-b border-luxury bg-[#050505]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-6">
+                <span class="font-syne text-2xl font-extrabold tracking-tighter text-white">
+                    IMAWEAR<span class="text-[#ffe500]">.</span>
+                </span>
+                <span class="text-[9px] tracking-[0.3em] text-zinc-600 uppercase font-bold hidden md:inline-block border-l border-zinc-800 pl-6">
+                    3-Month Advance Production Pipeline
+                </span>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 bg-[#0b0b0c] px-4 py-2 border border-luxury">
+                    <span class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Timeline:</span>
+                    <select id="month-selector" class="bg-transparent text-[#ffe500] text-[10px] font-bold uppercase tracking-wider focus:outline-none cursor-pointer" onchange="renderTimeline()">
+                        <option value="0">Januari (Kerja Awal)</option>
+                        <option value="1">Februari (Kerja Awal)</option>
+                        <option value="2">Maret (Kerja Awal)</option>
+                        <option value="3">April (Kerja Awal)</option>
+                        <option value="4">Mei (Kerja Awal)</option>
+                        <option value="5" selected>Juni (Kerja Awal)</option>
+                        <option value="6">Juli (Kerja Awal)</option>
+                        <option value="7">Agustus (Kerja Awal)</option>
+                        <option value="8">September (Kerja Awal)</option>
+                        <option value="9">Oktober (Kerja Awal)</option>
+                        <option value="10">November (Kerja Awal)</option>
+                        <option value="11">Desember (Kerja Awal)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-8">
+
+        <!-- Top Overview Stats -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-luxury-card border border-luxury p-6 flex flex-col justify-between">
+                <div>
+                    <span class="text-zinc-600 text-[9px] uppercase tracking-widest font-bold block mb-1">Completion Progress</span>
+                    <span class="text-4xl font-syne font-bold text-white" id="progress-text">0%</span>
+                </div>
+                <div class="mt-6">
+                    <div class="w-full bg-[#050505] h-[1px] overflow-hidden">
+                        <div id="progress-bar" class="bg-[#ffe500] h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <span class="text-[9px] text-zinc-600 mt-2 block">Akumulasi seluruh target checklist lo</span>
+                </div>
+            </div>
+
+            <div class="bg-luxury-card border border-luxury p-6">
+                <span class="text-zinc-600 text-[9px] uppercase tracking-widest font-bold block mb-3">Revenue Projection Calculator</span>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[9px] text-zinc-500 uppercase tracking-wider block mb-1">Target Assets</label>
+                        <input type="number" id="target-qty" value="10" class="w-full bg-[#050505] border border-luxury text-white text-xs p-2.5 focus:outline-none focus:border-zinc-800" oninput="calcRevenue()">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-zinc-500 uppercase tracking-wider block mb-1">Price / Asset ($)</label>
+                        <input type="number" id="target-price" value="120" class="w-full bg-[#050505] border border-luxury text-white text-xs p-2.5 focus:outline-none focus:border-zinc-800" oninput="calcRevenue()">
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-zinc-900/50 flex justify-between items-center">
+                    <span class="text-[9px] text-zinc-600 uppercase">Gross Revenue Target</span>
+                    <span class="text-sm font-bold text-[#ffe500]" id="revenue-display">$0</span>
+                </div>
+            </div>
+
+            <div class="bg-luxury-card border border-luxury p-6 flex flex-col justify-between">
+                <div>
+                    <span class="text-zinc-600 text-[9px] uppercase tracking-widest font-bold block mb-2">Last Week Evaluation</span>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-zinc-400">Assets Sold (License)</span>
+                            <span class="text-white font-semibold">3 Premades</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-zinc-400">Recorded Revenue</span>
+                            <span class="text-[#ffe500] font-semibold">$360.00</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[9px] text-zinc-700 italic block mt-4">Katalog bundle mockup & psd asset terupdate</span>
+            </div>
+        </section>
+
+        <!-- Advance Production Timeline Engine -->
+        <section class="bg-luxury-card border border-luxury p-8">
+            <div class="border-b border-zinc-900 pb-5 mb-6">
+                <span class="text-[#ffe500] text-[9px] tracking-[0.25em] font-bold uppercase block mb-1">Algorithm Window</span>
+                <h2 class="text-xl font-syne font-bold text-white">Production Engine (3-Month Offset)</h2>
+                <p class="text-zinc-500 text-xs mt-1">Sistem ini otomatis menampilkan kebutuhan desain yang harus lo siapkan sekarang untuk rilis brand global 3 bulan ke depan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Target Season -->
+                <div class="space-y-4">
+                    <div class="bg-[#050505] border border-luxury p-5 h-full flex flex-col justify-between">
+                        <div>
+                            <span class="text-zinc-600 text-[8px] uppercase tracking-widest font-bold block mb-1">Target Launch Season (3 Bulan Kedepan)</span>
+                            <div class="text-base font-syne font-bold text-[#ffe500]" id="meta-season">-</div>
+                            <p class="text-zinc-400 text-xs mt-2 leading-relaxed" id="meta-desc">-</p>
+                        </div>
+                        <span class="text-[8px] text-zinc-700 uppercase tracking-widest font-bold mt-4 block">Engine status: ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Top 5 Demands -->
+                <div class="bg-[#050505] border border-luxury p-5">
+                    <span class="text-zinc-600 text-[8px] uppercase tracking-widest font-bold block mb-4">Top 5 Highly Demanded Items by Brands</span>
+                    <div class="space-y-3" id="demand-container">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- Premade Design Focus -->
+                <div class="bg-[#050505] border border-luxury p-5 flex flex-col justify-between">
+                    <div>
+                        <span class="text-zinc-600 text-[8px] uppercase tracking-widest font-bold block mb-3">Premade Design Inventory Focus</span>
+                        <div class="space-y-2" id="premade-container">
+                            <!-- Dynamic items -->
+                        </div>
+                    </div>
+                    <span class="text-[9px] text-zinc-700 block mt-4">Siapkan format PSD/AI rapi siap kirim.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklists & WhatsApp Dispatch -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Daily Personal Win -->
+            <div class="bg-luxury-card border border-luxury p-6 lg:col-span-4">
+                <div class="border-b border-zinc-900 pb-3 mb-4 flex justify-between items-center">
+                    <h3 class="font-syne font-bold text-xs text-white">Daily Personal Win</h3>
+                    <span class="text-[8px] border border-zinc-800 text-zinc-500 px-2 py-0.5 uppercase tracking-wider font-bold">Spirit & Body</span>
+                </div>
+                <div class="space-y-2 text-xs" id="personal-list">
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Tahajud</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Al-Waqiah</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Workout</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Dhuha</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">English Practice</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Design Study</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Content & Work -->
+            <div class="bg-luxury-card border border-luxury p-6 lg:col-span-4">
+                <div class="border-b border-zinc-900 pb-3 mb-4 flex justify-between items-center">
+                    <h3 class="font-syne font-bold text-xs text-white">Weekly Content & Work</h3>
+                    <span class="text-[8px] border border-zinc-800 text-zinc-500 px-2 py-0.5 uppercase tracking-wider font-bold">Workflow</span>
+                </div>
+                <div class="space-y-2 text-xs" id="work-list">
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Deep Work (Design)</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Upload Reels</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Upload Feed/Carousel</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Engage with US Brands</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Update Asset/Mockup</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-[#050505] border border-luxury hover:border-zinc-800 transition-colors">
+                        <span class="text-zinc-400">Follow-up Leads</span>
+                        <input type="checkbox" class="task-cb" onchange="onCheckboxChange()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dispatch Engine (Fixed WA Link integration) -->
+            <div class="bg-luxury-card border border-luxury p-6 lg:col-span-4 flex flex-col justify-between">
+                <div>
+                    <div class="border-b border-zinc-900 pb-3 mb-4">
+                        <h3 class="font-syne font-bold text-xs text-white">Report Dispatcher</h3>
+                    </div>
+                    <p class="text-xs text-zinc-500 leading-relaxed mb-4">
+                        Tiap kali lo checklist data di atas atau update target, tombol whatsapp di bawah bakal nge-link otomatis buat ngirim laporan ke wa.me/6288801176035.
+                    </p>
+                    
+                    <div class="bg-[#050505] border border-luxury p-3 text-[10px] font-mono text-zinc-600 max-h-32 overflow-y-auto custom-scrollbar rounded-none mb-4" id="report-preview-box">
+                        [Laporan terupdate kosong]
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <a id="wa-native-link" href="https://wa.me/6288801176035" target="_blank" class="w-full bg-[#ffe500] text-black font-syne font-bold text-xs py-3.5 block text-center uppercase tracking-wider transition-all duration-300 hover:bg-white">
+                        Send to WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Luxury Strategy Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-luxury-card border border-luxury p-6">
+                <span class="text-[#ffe500] text-[8px] font-bold uppercase tracking-widest block mb-1">Instagram Algorithm Mastery</span>
+                <h4 class="text-sm font-syne font-bold text-white mb-4">How to Win the Instagram Competition</h4>
+                <div class="space-y-3 text-xs leading-relaxed text-zinc-500">
+                    <p><strong class="text-white">Multi-Slide Technical Value:</strong> Jangan cuma pajang flat mockup pakaian biasa. Brand premium mau ngeliat detail teknis berupa closeup cetakan tinta puff print, wireframe vector lineart, susunan layer PSD yang rapi, hingga panduan warna pantone.</p>
+                    <p><strong class="text-white">Algorithmic Niche Engagement:</strong> Sebelum mengunggah konten baru, lakukan interaksi strategis di akun instagram brand streetwear global. Tulis opini teknis yang informatif di kolom komentar mereka untuk memancing ketertarikan tim kreatif mereka agar mengunjungi profil lo.</p>
+                </div>
+            </div>
+
+            <div class="bg-luxury-card border border-luxury p-6">
+                <span class="text-[#ffe500] text-[8px] font-bold uppercase tracking-widest block mb-1">Premium Sales Acquisition</span>
+                <h4 class="text-sm font-syne font-bold text-white mb-4">High-Ticket Licensing Methods</h4>
+                <div class="space-y-3 text-xs leading-relaxed text-zinc-500">
+                    <p><strong class="text-white">Value Bundling Over Price Cuts:</strong> Saat klien mencoba menawar harga lisensi premade desain, jangan langsung memberikan potongan harga. Tawarkan bonus berupa variasi warna alternatif gratis atau aset pendukung untuk mempertahankan nilai jual utama aset lo.</p>
+                    <p><strong class="text-white">The Regional Exclusivity Pitch:</strong> Yakinkan pembeli potensial bahwa lisensi desain komersial ini diproteksi ketat dan kuotanya dibatasi per wilayah geografis pasar utama dunia guna memastikan keunikan desain koleksi brand mereka di pasaran.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const engineData = [
+            {
+                currentMonth: "Januari",
+                launchTarget: "April / Mei (Spring / Festival Drop Prep)",
+                desc: "Saat ini di bulan Januari, brand global mulai mengonsep koleksi semi-hangat yang penuh ekspresi untuk festival musik musim semi seperti Coachella. Siapkan aset bernuansa retro futuristik, acid, dan detail detail teknikal.",
+                demands: ["Graphic Oversized Tees", "Mesh Cargo Shorts", "Lightweight Spring Hoodies", "Shoulder Utility Bags", "Structured Trucker Caps"],
+                premade: ["Full-Print Sublimation Textures", "3D Render Y2K Vector Assets", "Psychedelic Abstract Fonts Grid"]
+            },
+            {
+                currentMonth: "Februari",
+                launchTarget: "Mei / Juni (Early Summer Drop Prep)",
+                desc: "Di bulan Februari, brand bergeser fokus ke rilisan musim panas awal. Tren olahraga harian, blokecore, jersey, dan aksesoris ringan sangat diminati.",
+                demands: ["Football Jerseys (Blokecore)", "Nylon Active Training Shorts", "Vintage Sport Polo Tees", "Light Mesh Tank Tops", "Logo Detailed Crew Socks"],
+                premade: ["Sport Jersey Vector Kits", "Retro Athletics Emblem Badge", "Minimalist Block Corporate Typo"]
+            },
+            {
+                currentMonth: "Maret",
+                launchTarget: "Juni / Juli (Mid-Summer Drop Prep)",
+                desc: "Bulan Maret adalah momen krusial untuk membuat desain musim panas penuh. Estetika skateboard era 90-an, jorts lebar, grafis pantai bernuansa graffiti sangat dicari.",
+                demands: ["Denim Wide-Leg Jorts", "Cropped Ribbed Tops", "Mesh Athletic Gym Shorts", "Vibrant Graphic Summer Tees", "Reversible Bucket Hats"],
+                premade: ["Skater Aesthetic Asset Packs", "Vibrant Throw-up Graffiti Typo", "Distressed Summer Sun Graphics"]
+            },
+            {
+                currentMonth: "April",
+                launchTarget: "Juli / Agustus (Pre-Fall & Clearance Prep)",
+                desc: "Di bulan April, desainer harus fokus ke transisi musim panas akhir menuju gugur. Pakaian dengan ketebalan sedang dan bernuansa industrial/workwear mulai naik permintaannya.",
+                demands: ["Lightweight Nylon Windbreakers", "Heavy Cargo Utility Trousers", "Premium Canvas Tote Bags", "Heavyweight Graphic Longsleeves", "Minimalist Slides Mockup"],
+                premade: ["Industrial Utility Theme Kits", "Technical Mockup Source Files", "Earthtone Abstract Base Vectors"]
+            },
+            {
+                currentMonth: "Mei",
+                launchTarget: "Agustus / September (Back To School Campaign)",
+                desc: "Bulan Mei adalah waktu terbaik untuk memproduksi desain bernuansa preppy, varsity, washed hoodie, denim, dan grafik kasual bertema sekolah/kampus untuk musim belanja besar di Amerika.",
+                demands: ["Vintage Washed Pullover Hoodies", "Premium Canvas Backpacks", "Loose Fit Carpenter Denim", "Heavy Flannel Overshirts", "Graphic Tee Standard Bundles"],
+                premade: ["Acid Wash Texture Templates", "Preppy/Campus Varsity Logos", "Heavyweight Mockup Starter Packs"]
+            },
+            {
+                currentMonth: "Juni",
+                launchTarget: "September / Oktober (Autumn / Winter & Halloween Drop)",
+                desc: "Bulan Juni adalah awal pengerjaan musim gugur & dingin (AW). Buatlah desain bertema gelap, gothic americana, heavy metal, dan elemen seram khusus halloween demi mengamankan orderan brand global.",
+                demands: ["Heavyweight Boxy Hoodies", "Varsity Jackets with Heavy Patches", "Knit Sweaters & Cardigans", "Double-Knee Carpenter Workpants", "Gothic Typography Heavy Tees"],
+                premade: ["Gothic Horror Typography Packs", "Acid Wash Textured Graphics", "Skeleton & Cyber-Bones Layouts"]
+            },
+            {
+                currentMonth: "Juli",
+                launchTarget: "Oktober / November (Late Fall & Pre-Black Friday)",
+                desc: "Di bulan Juli, brand bersiap menghadapi lonjakan trafik komersial tertinggi akhir tahun (Black Friday). Siapkan grafik berlogo tegas, bold, brutalist, dan mudah diaplikasikan secara massal.",
+                demands: ["Logo Basic Heavy Black Tees", "Heavy Sherpa / Fleece Jackets", "Full-Zip Skeleton Graphic Hoodies", "Giftable Stockings & Enamel Pins", "Premium Suede Caps"],
+                premade: ["High Commercial Bold Typography", "Cyberpunk Distressed Wireframes", "Brutalist Graphic Elements Vector"]
+            },
+            {
+                currentMonth: "Agustus",
+                launchTarget: "November / Desember (Black Friday & Christmas Blitz)",
+                desc: "Bulan Agustus adalah waktu memproduksi desain bertema liburan natal, musim salju klasik, sweater rajut hangat, dan visual bundle hadiah.",
+                demands: ["Holiday Intarsia Knit Sweaters", "Premium Heavy Wool Scarves", "Thermal Heavy Inners", "Corduroy Insulated Worker Jackets", "Relaxed Fleece Joggers"],
+                premade: ["Y2K Festive Metallic Vectors", "Vintage Winter Cohesive Templates", "Classic Geometric Monogram Assets"]
+            },
+            {
+                currentMonth: "September",
+                launchTarget: "Desember / Januari (Year-End Sale & AW Deep Winter)",
+                desc: "Di bulan September, desainer fokus memproduksi aset tebal tahan cuaca dingin ekstrem untuk koleksi awal tahun baru. Grafis berkarakter tebal dan estetika distopia/darkwear sangat diminati.",
+                demands: ["Heavyweight Boxy Hoodie", "Balaclava / Knit Beanie Hats", "Technical Puffer Jacket Drafts", "Heavyweight Fleece Sweatpants", "Thermal Insulated Long Sleeves"],
+                premade: ["Dark Aesthetic Layout Templates", "Heavy Metal Distressed Typo Kits", "Grunge Weathered Overlay Prints"]
+            },
+            {
+                currentMonth: "Oktober",
+                launchTarget: "Januari / Februari (New Year Launch & AW Core)",
+                desc: "Oktober menjadi momen transisi produksi untuk awal tahun depan. Brand butuh rilisan basic, minimalis, elegan, dan ilustrasi maskot retro varsity.",
+                demands: ["Varsity Jacket Base Concepts", "Heavy Knit Sweatshirts", "Double-Knee Raw Indigo Denim", "Minimalist Logo Premium Hoodies", "Structured Leather Messenger Bags"],
+                premade: ["Luxury Minimalist Line Brandings", "Vintage Mascot Vector Illustrations", "Premium Emblem Layout Baselines"]
+            },
+            {
+                currentMonth: "November",
+                launchTarget: "Februari / Maret (Early Spring Drop Prep)",
+                desc: "Bulan November adalah waktu mulai mendesain tema musim semi awal. Kultur balap racing, chrome typography, dan transisi jaket-jaket ringan mulai dipersiapkan.",
+                demands: ["Tracksuit Zip-up Jackets", "Heavy Washed Vintage Graphic Tees", "Denim Jackets with Backprint", "Structured Twill Trucker Caps", "Light Ripstop Windbreakers"],
+                premade: ["Racing Culture Vector Kits", "Motorcross High-Tech Graphics", "Chrome Textured Typo Elements"]
+            },
+            {
+                currentMonth: "Desember",
+                launchTarget: "Maret / April (Spring Drop Core & Music Festival Prep)",
+                desc: "Di bulan Desember, tutup tahun lo dengan membuat desain ekspresif, cerah, retro, psychedelic untuk koleksi festival musik semi tahun depan.",
+                demands: ["Oversized Graphic Heavy T-Shirts", "Breathable Mesh Utility Shorts", "Light Cotton Summer Hoodies", "Crossbody Nylon Bags", "Retro Eyewear Accessories"],
+                premade: ["Full-Print Sublimation Frameworks", "3D Retro-Futuristic Wireframes", "Psychedelic Colorful Texture Packs"]
+            }
+        ];
+
+        function renderTimeline() {
+            const index = document.getElementById("month-selector").value;
+            const data = engineData[index];
+
+            document.getElementById("meta-season").innerText = data.launchTarget;
+            document.getElementById("meta-desc").innerText = data.desc;
+
+            let demandHtml = "";
+            data.demands.forEach((item, idx) => {
+                demandHtml += `
+                    <div class="flex items-center justify-between text-xs py-2 border-b border-zinc-900 last:border-b-0">
+                        <span class="text-zinc-300 font-medium"><span class="text-[#ffe500] font-mono mr-2">0${idx+1}.</span>${item}</span>
+                        <span class="text-[9px] text-[#ffe500] font-mono font-bold tracking-widest bg-[#ffe500]/5 px-2 py-0.5 border border-[#ffe500]/10">HOT ITEM</span>
+                    </div>
+                `;
+            });
+            document.getElementById("demand-container").innerHTML = demandHtml;
+
+            let premadeHtml = "";
+            data.premade.forEach(item => {
+                premadeHtml += `
+                    <div class="p-2.5 bg-[#050505] border border-luxury text-xs text-zinc-300 flex items-center gap-2">
+                        <span class="text-[#ffe500]">✦</span> ${item}
+                    </div>
+                `;
+            });
+            document.getElementById("premade-container").innerHTML = premadeHtml;
+            
+            // Trigger link rebuild whenever month changes
+            updateWhatsAppLink();
+        }
+
+        function calcRevenue() {
+            const qty = parseFloat(document.getElementById("target-qty").value) || 0;
+            const price = parseFloat(document.getElementById("target-price").value) || 0;
+            const total = qty * price;
+            document.getElementById("revenue-display").innerText = "$" + total.toLocaleString('en-US');
+            updateWhatsAppLink();
+        }
+
+        function calcProgress() {
+            const checkboxes = document.querySelectorAll(".task-cb");
+            let checked = 0;
+            checkboxes.forEach(cb => { if(cb.checked) checked++; });
+            const rate = checkboxes.length > 0 ? Math.round((checked / checkboxes.length) * 100) : 0;
+            document.getElementById("progress-text").innerText = rate + "%";
+            document.getElementById("progress-bar").style.width = rate + "%";
+            return rate;
+        }
+
+        function updateWhatsAppLink() {
+            const personalBoxes = document.querySelectorAll("#personal-list div");
+            const workBoxes = document.querySelectorAll("#work-list div");
+            
+            let personalStr = "*DAILY PERSONAL WIN*:\n";
+            personalBoxes.forEach(el => {
+                const text = el.querySelector("span").innerText;
+                const status = el.querySelector("input").checked ? "✅ Done" : "❌ Pending";
+                personalStr += `- ${text}: ${status}\n`;
+            });
+
+            let workStr = "\n*WEEKLY CONTENT & WORK*:\n";
+            workBoxes.forEach(el => {
+                const text = el.querySelector("span").innerText;
+                const status = el.querySelector("input").checked ? "✅ Done" : "❌ Pending";
+                workStr += `- ${text}: ${status}\n`;
+            });
+
+            const current = document.getElementById("month-selector").options[document.getElementById("month-selector").selectedIndex].text;
+            const revenue = document.getElementById("revenue-display").innerText;
+            const progress = calcProgress();
+
+            const finalMessage = `*IMAWEAR CREATOR PERFORMANCE REPORT*\n\n*Timeline Status*: ${current}\n*Checklist Progress*: ${progress}%\n*Projected Revenue*: ${revenue}\n\n${personalStr}${workStr}\n_Generated automatically via Imawear Hub Engine._`;
+            
+            // Set preview text box
+            document.getElementById("report-preview-box").innerText = finalMessage;
+
+            // Update Native Link Href
+            const waNativeLink = document.getElementById("wa-native-link");
+            waNativeLink.href = "https://wa.me/6288801176035?text=" + encodeURIComponent(finalMessage);
+        }
+
+        function onCheckboxChange() {
+            calcProgress();
+            updateWhatsAppLink();
+        }
+
+        window.onload = function() {
+            renderTimeline();
+            calcRevenue();
+            calcProgress();
+            updateWhatsAppLink();
+        }
+    </script>
+</body>
+</html>
